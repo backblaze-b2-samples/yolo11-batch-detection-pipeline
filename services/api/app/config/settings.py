@@ -3,8 +3,11 @@ from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
     # --- Backblaze B2 (S3-compatible) ---
-    b2_endpoint: str = "https://s3.us-west-004.backblazeb2.com"
-    b2_region: str = "us-west-004"
+    # All required; left empty so no region/endpoint is baked into source.
+    # `main.py` startup validation (REQUIRED_B2_SETTINGS) fails fast with a
+    # readable error if any is omitted. See .env.example for example values.
+    b2_endpoint: str = ""
+    b2_region: str = ""
     b2_application_key_id: str = ""
     b2_application_key: str = ""
     b2_bucket_name: str = ""

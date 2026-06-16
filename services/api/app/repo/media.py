@@ -77,6 +77,25 @@ def encode_jpeg(frame, quality: int = 90) -> bytes:
     return buf.tobytes()
 
 
+def save_frame(frame, path: str) -> None:
+    """Spill a decoded BGR frame to local disk (numpy `.npy`).
+
+    Used by the pipeline to bound memory across a batch: a frame is decoded and
+    detected once (DETECTING), spilled here, then reloaded for cropping
+    (CROPPING) instead of being held in memory for the whole run.
+    """
+    import numpy as np
+
+    np.save(path, frame, allow_pickle=False)
+
+
+def load_frame(path: str):
+    """Reload a BGR frame previously written by `save_frame`."""
+    import numpy as np
+
+    return np.load(path, allow_pickle=False)
+
+
 def crop_instances(frame, boxes: list[list[float]]) -> list[bytes]:
     """Crop each `[x, y, w, h]` (absolute px) region from `frame` and return
     JPEG bytes. Boxes are clamped to the frame; degenerate crops are skipped.
