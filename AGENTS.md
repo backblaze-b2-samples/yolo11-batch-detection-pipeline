@@ -48,12 +48,15 @@ below still holds — keep these pieces; the rest is this app's detection pipeli
 - **Dashboard** (`/`) — pipeline metrics (runs, images processed, detections, distinct classes) + the source-vs-derived B2 footprint multiplier + a recent-runs table with live status. New aggregations flow `runtime -> service -> repo` and are exposed via TanStack Query hooks in `apps/web/src/lib/queries.ts` — no bare `useEffect + fetch`.
 
 **Pipeline invariant**
-- Every external CV/media dependency is wrapped in a `repo/` adapter
-  (`detection`, `media`, `annotate`). The service layer reasons over plain
-  Pydantic models (`Run`, `ImageResult`, `Detection`) and **never** imports
-  `ultralytics`, `cv2`, `numpy`, or `PIL` directly. Keep it that way.
+- Every external CV/media dependency in the detection pipeline is wrapped in a
+  `repo/` adapter (`detection`, `media`, `annotate`). The service layer reasons
+  over plain Pydantic models (`Run`, `ImageResult`, `Detection`) and **never**
+  imports `ultralytics`, `cv2`, or `numpy` directly. Keep it that way.
   `ultralytics` is imported **lazily** inside `repo/detection.py` so structural
-  tests stay importable without the CV runtime installed.
+  tests stay importable without the CV runtime installed. (One scoped
+  exception: the inherited `/files` image-metadata reader uses Pillow in
+  `service/metadata.py` — that feature is the only place an external imaging
+  library is permitted in the service layer.)
 - The primary feature (detect/segment → annotate → crop → COCO) must stay
   **real** — no mocked detections, no synthetic crops. YOLO11 runs locally on
   pre-trained COCO weights with **no API key**; weights auto-download on first
