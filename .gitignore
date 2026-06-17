@@ -52,3 +52,6 @@ services/api/data/
 
 # YOLO11 weights, auto-downloaded by Ultralytics on first run
 *.pt
+
+# Local verification test inputs (not for commit)
+.local/
