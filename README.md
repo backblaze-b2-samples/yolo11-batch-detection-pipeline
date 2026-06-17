@@ -22,6 +22,24 @@ labeling project or powering a video-analytics pipeline.
 Runs entirely on local OSS: **B2 credentials are the only secret** (no second
 API key). YOLO11 weights auto-download on first use.
 
+## What it looks like
+
+**Dashboard** — pipeline metrics (runs, images processed, detections, distinct classes), the source-vs-derived B2 footprint multiplier, and a recent-runs table.
+
+![Dashboard with pipeline metrics, B2 footprint multiplier, and recent runs](docs/images/dashboard.png)
+
+**Runs Library** — every batch detection run, scoped to this app's B2 prefix, with its source thumbnail, task, and detection/crop counts.
+
+![Runs Library showing detection runs with thumbnails and counts](docs/images/runs-library.png)
+
+**Run detail — annotated frames** — the confidence-threshold slider re-filters stored detections client-side over a gallery of annotated frames.
+
+![Run detail with confidence slider and annotated-frame gallery](docs/images/run-detail-annotated-frames.png)
+
+**Run detail — instance crops** — every detected object cropped and grouped by class (person, car, traffic light).
+
+![Run detail instance-crops gallery grouped by class](docs/images/run-detail-instance-crops.png)
+
 ## Why B2
 
 Detection **multiplies the storage footprint** of the original corpus on every
