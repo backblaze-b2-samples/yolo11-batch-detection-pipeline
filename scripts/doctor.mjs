@@ -21,6 +21,7 @@ const VENV_UVICORN = resolve(REPO_ROOT, "services/api/.venv/bin/uvicorn");
 
 // Required minimum versions. Bump as upstream support shifts.
 const REQUIRED_NODE_MAJOR = 20;
+const REQUIRED_NODE_MINOR = 9;
 const REQUIRED_PNPM_MAJOR = 9;
 const REQUIRED_PYTHON_MINOR = 11; // 3.11+
 
@@ -76,10 +77,14 @@ function parseSemver(s) {
 
 function checkNode() {
   const v = parseSemver(process.version);
-  if (!v || v.major < REQUIRED_NODE_MAJOR) {
+  const nodeTooOld =
+    !v ||
+    v.major < REQUIRED_NODE_MAJOR ||
+    (v.major === REQUIRED_NODE_MAJOR && v.minor < REQUIRED_NODE_MINOR);
+  if (nodeTooOld) {
     fail(
-      `Node ${process.version} is too old (need >= ${REQUIRED_NODE_MAJOR}.0.0)`,
-      `Install a current Node via nvm/fnm: \`nvm install ${REQUIRED_NODE_MAJOR}\``,
+      `Node ${process.version} is too old (need >= ${REQUIRED_NODE_MAJOR}.${REQUIRED_NODE_MINOR}.0)`,
+      `Install a current Node via nvm/fnm: \`nvm install ${REQUIRED_NODE_MAJOR}.${REQUIRED_NODE_MINOR}\``,
     );
   }
 }
