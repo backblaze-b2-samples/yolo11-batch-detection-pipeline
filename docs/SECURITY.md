@@ -46,6 +46,12 @@ Security principles and implementation for the yolo11-batch-detection-pipeline.
 - Never committed to source control
 - `.env.example` documents required variables without values
 
+## Dependency Security
+
+- Frontend transitive dependency security pins are centralized in the root
+  `pnpm.overrides` block so patched versions are enforced consistently across
+  workspace packages.
+
 ## Agent Security Rules
 
 - Never commit `.env`, credentials, or API keys
