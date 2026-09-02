@@ -1,4 +1,4 @@
-<!-- last_verified: 2026-04-22 -->
+<!-- last_verified: 2026-09-02 -->
 # Security
 
 Security principles and implementation for the yolo11-batch-detection-pipeline.
@@ -49,8 +49,11 @@ Security principles and implementation for the yolo11-batch-detection-pipeline.
 ## Dependency Security
 
 - Frontend transitive dependency security pins are centralized in the root
-  `pnpm.overrides` block so patched versions are enforced consistently across
-  workspace packages.
+  `package.json` `pnpm.overrides` block so patched versions are enforced
+  consistently across workspace packages.
+- Treat overrides as temporary pins: review them during dependency security
+  maintenance and remove them once upstream packages resolve the affected
+  transitive dependency.
 
 ## Agent Security Rules
 
