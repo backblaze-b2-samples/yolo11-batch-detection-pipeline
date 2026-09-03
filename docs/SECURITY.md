@@ -1,4 +1,4 @@
-<!-- last_verified: 2026-04-22 -->
+<!-- last_verified: 2026-09-02 -->
 # Security
 
 Security principles and implementation for the yolo11-batch-detection-pipeline.
@@ -45,6 +45,15 @@ Security principles and implementation for the yolo11-batch-detection-pipeline.
 - All secrets loaded via environment variables (pydantic-settings)
 - Never committed to source control
 - `.env.example` documents required variables without values
+
+## Dependency Security
+
+- Frontend transitive dependency security pins are centralized in the root
+  `package.json` `pnpm.overrides` block so patched versions are enforced
+  consistently across workspace packages.
+- Treat overrides as temporary pins: review them during dependency security
+  maintenance and remove them once upstream packages resolve the affected
+  transitive dependency.
 
 ## Agent Security Rules
 
